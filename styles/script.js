@@ -40,7 +40,7 @@ const generateChoice = (user) => {
 };
 
 const getResult = (playerChoice, computerChoice) => {
-  if (playerChoice === computerChoice) return "SERI";
+  if (playerChoice === computerChoice) return "draw";
   if (playerChoice === "batu")
     return computerChoice === "kertas" ? "COM WIN" : "Player win";
   if (playerChoice === "kertas")
@@ -54,6 +54,18 @@ const getComputerChoice = () => {
   if (number === 1) return "batu";
   if (number === 2) return "kertas";
   if (number === 3) return "gunting";
+};
+
+const removeEvent = () => {
+  const refreshNote = document.querySelector("span#refreshNote");
+  const computerChoice = computer.querySelectorAll(".choice");
+  let i = 0;
+  playerChoice.forEach((item) => {
+    item.classList.add("removeEvent");
+    computerChoice[i++].classList.add("removeEvent");
+  });
+  refreshNote.append(document.createTextNode("Reload page to play again !"));
+  refreshNote.style.color = "white";
 };
 
 generateChoice(player);
@@ -70,20 +82,11 @@ playerChoice.forEach((item) => {
 
     removeEvent();
 
-    result.classList.add('gameResult')
+    result.classList.add("gameResult");
     const hasil = getResult(item.classList[0], comp);
     result.innerHTML = hasil;
   });
 });
-
-const removeEvent = () => {
-  const computerChoice = computer.querySelectorAll(".choice");
-  let i = 0;
-  playerChoice.forEach((item) => {
-    item.classList.add("removeEvent");
-    computerChoice[i++].classList.add("removeEvent");
-  });
-};
 
 refresh.addEventListener("click", () => {
   window.location.reload();
