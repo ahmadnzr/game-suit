@@ -1,6 +1,7 @@
 body {
   background-color: #9c835f;
   font-family: "Open Sans", sans-serif;
+  overflow-y: hidden;
 }
 
 section.main {
@@ -57,18 +58,14 @@ section.main {
   cursor: pointer;
 }
 
-.choice:focus {
-  background-color: #a08f76;
-}
-
 #computer .choice:hover {
   pointer-events: none;
   background-color: #99794d;
 }
 
 .choiced {
-  background-color: #a08f76;
-  animation: animate 0.2s;
+  background-color: white;
+  animation: animate 0.2s linear;
   animation-iteration-count: 5;
 }
 
@@ -77,10 +74,10 @@ section.main {
 }
 
 @keyframes animate {
-  0% {
-    background-color: #a08f76;
+  from {
+    background-color: #cac7c3;
   }
-  100% {
+  to {
     background-color: #99794d;
   }
 }
@@ -89,16 +86,22 @@ section.main {
   height: 50px;
   width: 50px;
 }
+
 .player,
 .computer {
   height: 100%;
   flex: 2;
 }
+
 .player span,
 .computer span {
   text-transform: uppercase;
   font-weight: 900;
   color: white;
+}
+
+.result {
+  position: absolute;
 }
 
 .result h1 {
@@ -122,19 +125,65 @@ section.main {
   transform: rotate(-25deg);
 }
 
+.bottom {
+  position: absolute;
+  right: 0;
+  left: 0;
+  bottom: 15px;
+}
+
 .bottom .choice {
   height: 60px;
   width: 60px;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
 }
-img.refresh {
+
+div#refresh img {
   height: 30px;
+}
+
+.refresh {
+  animation: putar 2s linear infinite;
+  background-color: white;
+}
+
+@keyframes putar {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
 }
 
 @media screen and (max-width: 480px) {
   .mainTopTitle {
     font-size: 1.2rem;
+  }
+
+  .choice {
+    width: 80px;
+    height: 80px;
+  }
+
+  .gameSec img {
+    height: 40px;
+    width: 40px;
+  }
+
+  .result h1 {
+    font-size: 2em;
+  }
+
+  .bottom .choice {
+    height: 50px;
+    width: 50px;
+  }
+
+  div#refresh img {
+    height: 20px;
   }
 }

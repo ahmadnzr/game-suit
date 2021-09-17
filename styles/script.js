@@ -16,11 +16,14 @@ const assets = [
   },
 ];
 
+const COM_WIN = "COM WIN";
+const PLAYER_WIN = "PLAYER WIN";
+const DRAW = "DRAW";
+
 const gameSection = document.getElementById("theGame");
 const player = gameSection.querySelector(".player");
 const computer = gameSection.querySelector(".computer");
 const result = gameSection.querySelector(".result");
-const refresh = document.getElementById("refresh");
 
 const generateChoice = (user) => {
   const title = document.createElement("span");
@@ -42,36 +45,36 @@ const generateChoice = (user) => {
 const getResult = (playerChoice, computerChoice) => {
   if (playerChoice === computerChoice) return "draw";
   if (playerChoice === "batu")
-    return computerChoice === "kertas" ? "COM WIN" : "Player win";
+    return computerChoice === "kertas" ? COM_WIN : PLAYER_WIN;
   if (playerChoice === "kertas")
-    return computerChoice === "gunting" ? "com win" : "player win";
+    return computerChoice === "gunting" ? COM_WIN : PLAYER_WIN;
   if (playerChoice === "gunting")
-    return computerChoice === "batu" ? "com win" : "player win";
+    return computerChoice === "batu" ? COM_WIN : PLAYER_WIN;
 };
 
 const getComputerChoice = () => {
-  const number = Math.round(Math.random() * 2 + 1);
-  if (number === 1) return "batu";
-  if (number === 2) return "kertas";
-  if (number === 3) return "gunting";
+  const number = Math.random();
+  if (number < 0.33) return "batu";
+  if (number < 0.63) return "kertas";
+  return "gunting";
 };
 
 const removeEvent = () => {
-  const refreshNote = document.querySelector("span#refreshNote");
+  const refreshPage = document.querySelector("div#refresh");
   const computerChoice = computer.querySelectorAll(".choice");
   let i = 0;
   playerChoice.forEach((item) => {
     item.classList.add("removeEvent");
     computerChoice[i++].classList.add("removeEvent");
   });
-  refreshNote.append(document.createTextNode("Reload page to play again !"));
-  refreshNote.style.color = "white";
+  refreshPage.classList.add("refresh");
 };
 
 generateChoice(player);
 generateChoice(computer);
 
 const playerChoice = player.querySelectorAll(".choice");
+
 playerChoice.forEach((item) => {
   item.addEventListener("click", () => {
     const comp = getComputerChoice();
@@ -80,11 +83,11 @@ playerChoice.forEach((item) => {
     compLocation.classList.add("choiced");
     item.classList.add("choiced");
 
-    removeEvent();
-
     result.classList.add("gameResult");
     const hasil = getResult(item.classList[0], comp);
     result.innerHTML = hasil;
+
+    removeEvent();
   });
 });
 
